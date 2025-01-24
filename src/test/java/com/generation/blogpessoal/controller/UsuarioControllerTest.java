@@ -1,4 +1,4 @@
-﻿package com.generation.blogpessoal.controller;
+package com.generation.blogpessoal.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -40,7 +40,7 @@ public class UsuarioControllerTest {
 		usuarioRepository.deleteAll();
 
 		usuarioService.cadastrarUsuario(new Usuario(0L, 
-			"Root", "root@root.com", "rootroot", "-"));
+			"Root", "root@root.com", "rootroot", "-", null));
 
 	}
 
@@ -49,7 +49,7 @@ public class UsuarioControllerTest {
 	public void deveCriarUmUsuario() {
 
 		HttpEntity<Usuario> corpoRequisicao = new HttpEntity<Usuario>(new Usuario(0L, 
-			"Paulo Antunes", "paulo_antunes@email.com.br", "13465278", "-"));
+			"Paulo Antunes", "paulo_antunes@email.com.br", "13465278", "-", null));
 
 		ResponseEntity<Usuario> corpoResposta = testRestTemplate
 			.exchange("/usuarios/cadastrar", HttpMethod.POST, corpoRequisicao, Usuario.class);
@@ -63,10 +63,10 @@ public class UsuarioControllerTest {
 	public void naoDeveDuplicarUsuario() {
 
 		usuarioService.cadastrarUsuario(new Usuario(0L, 
-			"Maria da Silva", "maria_silva@email.com.br", "13465278", "-"));
+			"Maria da Silva", "maria_silva@email.com.br", "13465278", "-", null));
 
 		HttpEntity<Usuario> corpoRequisicao = new HttpEntity<Usuario>(new Usuario(0L, 
-			"Maria da Silva", "maria_silva@email.com.br", "13465278", "-"));
+			"Maria da Silva", "maria_silva@email.com.br", "13465278", "-", null));
 
 		ResponseEntity<Usuario> corpoResposta = testRestTemplate
 			.exchange("/usuarios/cadastrar", HttpMethod.POST, corpoRequisicao, Usuario.class);
@@ -79,10 +79,10 @@ public class UsuarioControllerTest {
 	public void deveAtualizarUmUsuario() {
 
 		Optional<Usuario> usuarioCadastrado = usuarioService.cadastrarUsuario(new Usuario(0L, 
-			"Juliana Andrews", "juliana_andrews@email.com.br", "juliana123", "-"));
+			"Juliana Andrews", "juliana_andrews@email.com.br", "juliana123", "-", null));
 
 		Usuario usuarioUpdate = new Usuario(usuarioCadastrado.get().getId(), 
-			"Juliana Andrews Ramos", "juliana_ramos@email.com.br", "juliana123" , "-");
+			"Juliana Andrews Ramos", "juliana_ramos@email.com.br", "juliana123" , "-", null);
 		
 		HttpEntity<Usuario> corpoRequisicao = new HttpEntity<Usuario>(usuarioUpdate);
 
@@ -99,10 +99,10 @@ public class UsuarioControllerTest {
 	public void deveMostrarTodosUsuarios() {
 
 		usuarioService.cadastrarUsuario(new Usuario(0L, 
-			"Sabrina Sanches", "sabrina_sanches@email.com.br", "sabrina123", "-"));
+			"Sabrina Sanches", "sabrina_sanches@email.com.br", "sabrina123", "-", null));
 		
 		usuarioService.cadastrarUsuario(new Usuario(0L, 
-			"Ricardo Marques", "ricardo_marques@email.com.br", "ricardo123", "-"));
+			"Ricardo Marques", "ricardo_marques@email.com.br", "ricardo123", "-", null));
 
 		ResponseEntity<String> resposta = testRestTemplate
 		.withBasicAuth("root@root.com", "rootroot")
